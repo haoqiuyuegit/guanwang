@@ -1,0 +1,77 @@
+{extend name="app" /}
+
+{block name="content"}
+
+<div class="page-header">
+    <h4 class="page-title">{$nav}</h4>
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="/admin/home">
+                <i class="flaticon-home"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-home">
+            <a href="/admin/nav">
+                导航栏
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="/admin/recruit/{$cid}">{$nav}</a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="">{$nav}添加</a>
+        </li>
+
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-line nav-color-secondary">
+            <li class="nav-item">
+                <a class="nav-link " href="/admin/recruit/{$cid}">{$nav}展示</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link active" href="/admin/recruit_create/{$cid}">{$nav}添加</a>
+            </li>
+
+        </ul>
+        <div class="card mt-2">
+            <div class="card-header">
+                <div class="card-title">{$nav}添加</div>
+            </div>
+
+            <form action="" id="form" method="post" enctype="multipart/form-data">
+                <div class="card-body">
+                    {include file='../application/admin/layout/_error.html' /}
+                    <input type="hidden" name="cid" value="{$cid}">
+                    <div class="form-group">
+                        <label>岗位名称</label>
+                        <input type="text" class="form-control input-square" name="name" value="{:session('old')['name']?:''}" placeholder="请输入新闻标题">
+                    </div>
+
+                    <div class="form-group">
+                        <label>新闻内容</label>
+                        {include file='../application/admin/layout/_simditor_add.html' /}
+                    </div>
+
+                </div>
+                <div class="card-action">
+                    <button class="btn btn-success">提交</button>
+                    <a href="javascript:;" class="btn btn-danger" onclick="reset()">重置</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{/block}

@@ -1,0 +1,42 @@
+{extend name='common' /}
+{block name='content'}
+<div class="aboutbg" style="background-image: {$v['image']} !important;">
+    <div class="container animated bounceInUp">
+        <h2>{$nav['title']}</h2>
+        <p>{$nav['description']}</p>
+
+    </div>
+</div>
+<div class="newnav">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-1 col-xs-3"><a href="" class="current">&nbsp;</a></div>
+            <div class="col-lg-1 col-xs-3"><a href=""></a></div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="product">
+            {foreach $goods as $v}
+            <div class="col-lg-12 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="col-md-1">
+                            <img src="{$v['image']}" alt="">
+                        </div>
+                        <div class="col-md-11">
+                            <h4 style="padding-top:15px">{$v['name']}</h4>
+                            <p>{$v['description']}</p>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <b>功能介绍:</b><span>{$v['Introduction']}</span>
+                    </div>
+                </div>
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</div>
+{/block}

@@ -1,0 +1,50 @@
+{extend name='common' /}
+{block name='content'}
+<div class="newbg">
+    <div class="container animated bounceInUp">
+        <h2>{$nav['title']}</h2>
+        <p>{$nav['description']}</p>
+    </div>
+</div>
+<div class="newnav">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-1 col-xs-3"><a href="about.html" class="current">&nbsp;</a></div>
+        </div>
+    </div>
+</div>
+<div class="newlist">
+    <div class="container">
+        {foreach $news as $v}
+        <div class="new">
+<!--            <a href="/news_detail/{$cid}/{$v['id']}" >-->
+            <a href="javascript:;" onclick="sit({$v['id']})">
+                <div class="col-lg-2 col-xs-3 shijian">
+                    <h2>{:substr($v['create_time'],-2)}</h2>
+                    <p>{:substr($v['create_time'],0,-3)}</p>
+                    <p>{$v['author']}</p>
+                </div>
+                <div class="col-lg-10 col-xs-9">
+                    <h2 class="title">{$v['title']}</h2>
+                    <p class="text">{$v['description']}</p>
+                    <p class="num">浏览次数：{$v['click']}</p>
+                </div>
+            </a>
+        </div>
+        {/foreach}
+
+    </div>
+</div>
+<nav class="pages">
+   {$news|raw}
+</nav>
+<script>
+    function sit(id) {
+        $.post('/clicks/'+id,{},function (res) {
+            if(res.code==1){
+                location.href="/news_detail/{$cid}/{$v['id']}";
+            }
+        },'json')
+    }
+</script>
+{/block}

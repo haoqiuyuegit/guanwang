@@ -1,0 +1,38 @@
+{extend name='common' /}
+{block name='content'}
+<div class="aboutbg" style="background-image: {$v['image']} !important;">
+    <div class="container animated bounceInUp">
+        <h2>{$nav['title']}</h2>
+        <p>{$nav['description']}</p>
+
+    </div>
+</div>
+<div class="newnav">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-1 col-xs-3"><a href="" class="current">&nbsp;</a></div>
+        </div>
+    </div>
+</div>
+<div class="container case mt">
+    <div class="row">
+        {foreach $case as $v}
+        <div class="col-lg-3 col-xs-12 casepic">
+            <div class="recent-work-wrap">
+                <a href="/case_detail/{$cid}/{$v['id']}">
+                    <img class="img-responsive" src="{$v['image']}" alt="">
+                    <div class="overlay">
+                        <div class="recent-work-inner">
+                            <h3>{$v['title']}</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+       {/foreach}
+    </div>
+</div>
+<nav class="pages">
+   {$case|raw}
+</nav>
+{/block}

@@ -1,0 +1,99 @@
+{extend name="app" /}
+
+{block name="content"}
+
+<div class="page-header">
+    <h4 class="page-title">更改密码</h4>
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="/admin/home">
+                <i class="flaticon-home"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="">更改密码</a>
+        </li>
+
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">个人中心</div>
+            </div>
+            <form action="" id="form" method="post" enctype="multipart/form-data">
+                <div class="card-body">
+                    {include file='../application/admin/layout/_error.html' /}
+                    <div class="form-group">
+                        <label>登录账号</label>
+                        <input type="text" class="form-control input-square" name="username" value="{:session('user')['username']}" readonly placeholder="请输入用户名">
+                    </div>
+                    <div class="form-group">
+                        <label>原始密码</label>
+                        <input type="text" class="form-control input-square" name="old_password" value="{:session('old')['old_password']?:''}" placeholder="请输入原始密码">
+                    </div>
+                    <div class="form-group">
+                        <label>新密码</label>
+                        <input type="text" class="form-control input-square" name="new_password" value="{:session('old')['new_password']?:''}" placeholder="请输入新密码">
+                    </div>
+                    <div class="form-group">
+                        <label>确认密码</label>
+                        <input type="text" class="form-control input-square" name="password" value="{:session('old')['password']?:''}" placeholder="请输入确认密码">
+                    </div>
+
+                </div>
+                <div class="card-action">
+                    <button class="btn btn-success">提交</button>
+                    <a href="javascript:;" class="btn btn-danger" onclick="reset()">重置</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function peo_upload() {
+        $('#file').click();
+        $('#file').unbind().change(function () {
+            let files = $(this)[0].files[0];    //获取文件信息
+            if (files) {
+                var formData = new FormData();
+                formData.append('file', files)
+            } else {
+                layer.msg('请选择图片', {icon: 5, time: 1500});
+                return false;
+            }
+            $.ajax({
+                url: '/admin/Login_controller/people_upload',
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                processData: false,         // 告诉jQuery不要去处理发送的数据
+                contentType: false,        // 告诉jQuery不要去设置Content-Type请求头
+                success: function (res) {
+                   $('#img-path').val(res);
+                   $('#img').attr('src',res);
+                },
+                xhr: function () {            //在jquery函数中直接使用ajax的XMLHttpRequest对象
+                    let xhr = new XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            let percentComplete = Math.round(evt.loaded * 100 / evt.total);
+                            $('#progress').css('display', 'block');
+                            $('#progress .progress-bar').text(percentComplete.toString() + '%').css('width', percentComplete.toString() + '%');
+                            // if($('#progress .progress-bar').text()=='100%'){
+                            //     $('#progress').css('display', 'none');
+                            // }
+                        }
+                    }, false);
+                    return xhr;
+                }
+            });
+        })
+    }
+</script>
+{/block}

@@ -1,0 +1,114 @@
+{extend name="app" /}
+
+{block name="content"}
+
+<div class="page-header">
+    <h4 class="page-title">{$nav}</h4>
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="/admin/home">
+                <i class="flaticon-home"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-home">
+            <a href="/admin/nav">
+                导航栏
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="">{$nav}</a>
+        </li>
+
+
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-line nav-color-secondary">
+            <li class="nav-item">
+                <a class="nav-link active" href="/admin/recruit/{$cid}">{$nav}展示</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="/admin/recruit_create/{$cid}">{$nav}添加</a>
+            </li>
+
+        </ul>
+        <div class="card mt-2">
+            <div class="card-header">
+                <div class="card-title">{$nav}展示</div>
+            </div>
+            <div class="card-body">
+                {include file='../application/admin/layout/_error.html' /}
+                <table class="table mt-3">
+                    <thead>
+                    <tr style="text-align: center">
+                        <th scope="col" width="200">#</th>
+                        <th scope="col" width="250">岗位名称</th>
+                        <th scope="col" width="200">创建时间</th>
+                        <th scope="col" width="200">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $data as $k=>$v}
+                    <tr style="text-align: center">
+                        <td>{$k+1}</td>
+                        <td>{$v['name']}</td>
+                        <td>{$v['create_time']}</td>
+
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-secondary btn-xs dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">操作
+                                </button>
+                                <div class="dropdown-menu" x-placement="bottom-start"
+                                     style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                    <a class="dropdown-item" href="/admin/recruit_edit/{$cid}/{$v['id']}">编辑</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="javascript:;" onclick="del({$v['id']})">删除</a>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+                <!-- 分页-->
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script>
+    function del(id) {
+        layer.confirm('确定要删除吗？', {
+            'title': false,
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            $.post("/admin/recruit_delete/{$cid}/"+id,{},function (res) {
+                if(res.code==10001){
+                    layer.msg(res.msg,{icon:6,time:1500},function () {
+                        window.location.reload();
+                    })
+                }else{
+                    layer.msg(res.msg,{icon:5,time:2000});
+                    return false;
+                }
+            },'json')
+        }, function () {
+            layer.close();
+        });
+    }
+
+
+</script>
+
+{/block}

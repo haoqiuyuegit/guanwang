@@ -1,0 +1,52 @@
+<link rel="stylesheet" type="text/css" href="/simditor/css/simditor.css"/>
+<!--<link rel="stylesheet" type="text/css" href="/simditor/simditor-emoji-master/styles/simditor-emoji.css" />-->
+
+<script src="/simditor/js/module.js"></script>
+<script src="/simditor/js/hotkeys.js"></script>
+<script src="/simditor/js/uploader.js"></script>
+<script src="/simditor/js/simditor.js"></script>
+
+<textarea id="editor" name="content" autofocus>{:session('old')['content']}</textarea>
+
+
+<script>
+    var editor = new Simditor({
+        textarea: $('#editor'),
+        placeholder: '考虑写点什么...',
+        toolbar: [
+            'title',
+            'bold',
+            'italic',
+            'underline',
+            'strikethrough',
+            'fontScale',
+            'color',
+            '|',
+            'ol',
+            'ul',
+            'blockquote',
+            'code',
+            'table',
+            '|',
+            'link',
+            'image',
+            'hr',
+            '|',
+            'indent',
+            'outdent',
+            'alignment',
+        ],
+        upload: {
+            url: '/admin/Com_controller/simditor_upload',
+            params: { _token: '1AA4xoPqwi6AHWBowQb7AvFAi8qgFB1SugE8gtdN' },
+            fileKey: 'file',
+            connectionCount: 10,
+            leaveConfirm: "文件上传中，关闭此页面将取消上传。",
+            success:function (res) {
+                console.log(res);
+            }
+        },
+        pasteImage: true,
+    });
+</script>
+

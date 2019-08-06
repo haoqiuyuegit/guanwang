@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>微享科技后台登录页面</title>
+	<!-- Meta tag Keywords -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8" />
+	<meta name="keywords" content=""/>
+	<script>
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<!-- Meta tag Keywords -->
+	<!-- css files -->
+	<link rel="stylesheet" href="/static/login/css/style.css" type="text/css" media="all" />
+	<!-- Style-CSS -->
+	<link rel="stylesheet" href="/static/login/css/fontawesome-all.css">
+	<!-- Font-Awesome-Icons-CSS -->
+	<!-- //css files -->
+	<!-- web-fonts -->
+<!--	<link href="http://maxcdn.bootstrapcdn.com/css?family=Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i" rel="stylesheet">-->
+<!--	<link href="http://maxcdn.bootstrapcdn.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">-->
+	<!-- //web-fonts -->
+</head>
+
+<body onkeydown="keyDown(event)">
+	<!-- bg effect -->
+	<div id="bg">
+		<canvas></canvas>
+		<canvas></canvas>
+		<canvas></canvas>
+	</div>
+	<!-- //bg effect -->
+	<!-- title -->
+	<h1>微享科技后台管理系统</h1>
+	<!-- //title -->
+	<!-- content -->
+	<div class="sub-main-w3">
+		<form action="/admin/login" method="post">
+			<h2>后台登录
+				<i class="fas fa-level-down-alt"></i>
+			</h2>
+			<div class="form-style-agile">
+				<label>
+					<i class="fas fa-user"></i>
+					账号
+				</label>
+				<input placeholder="账号" name="username" type="text" >
+			</div>
+			<div class="form-style-agile">
+				<label>
+					<i class="fas fa-unlock-alt"></i>
+					密码
+				</label>
+				<input placeholder="密码" name="password" type="password" >
+			</div>
+			<!-- checkbox -->
+<!--			<div class="wthree-text">-->
+<!--				<ul>-->
+<!--					<li>-->
+<!--						<label class="anim">-->
+<!--							<input type="checkbox" class="checkbox" required="">-->
+<!--							<span>Stay Signed In</span>-->
+<!--						</label>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#">Forgot Password?</a>-->
+<!--					</li>-->
+
+
+<!--				</ul>-->
+<!--			</div>-->
+			<!-- //checkbox -->
+			<a href="javascript:;" id="submit"  onclick="sub()">登&nbsp;&nbsp;录</a>
+		</form>
+	</div>
+	<!-- //content -->
+
+	<!-- copyright -->
+	<div class="footer">
+<!--		<a target="_blank" href="http://luntan.caowenbin.top">版权所有</a>-->
+		<p>Copyright &copy; 2019.微享网络科技有限公司 All rights reserved.</p>
+<!--		<p>Copyright &copy; 2019.微享网络科技有限公司 All rights reserved.</p>-->
+	</div>
+	<!-- //copyright -->
+
+	<!-- Jquery -->
+	<script src="/static/login/js/jquery-3.3.1.min.js"></script>
+	<script src="/static/layer/layer.js"></script>
+	<!-- //Jquery -->
+
+	<!-- effect js -->
+	<script src="/static/login/js/canva_moving_effect.js"></script>
+	<!-- //effect js -->
+
+	<script>
+		function keyDown(e) {
+			if(e.keyCode==13){
+				$('#submit').click();
+			}
+		}
+		function sub() {
+
+			let username=$("input[name=username]").val();
+			let password=$("input[name=password]").val();
+			if(!username){
+				layer.msg('请输入用户账号',{icon:2,time:2000});
+				return false;
+			}
+			if(!password){
+				layer.msg('请输入用户密码',{icon:4,time:2000});
+				return false;
+			}
+
+			$.post('/admin/login',{username:username,password:password},function (res) {
+					if(res.code==10001){
+							layer.msg(res.msg,{icon:6,time:1500},function () {
+								location.href='/admin/home';
+							})
+					}else{
+						layer.msg(res.msg,{icon:5,time:2000});
+						return false;
+					}
+			},'json')
+
+		}
+	</script>
+</body>
+
+</html>

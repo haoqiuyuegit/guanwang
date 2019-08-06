@@ -1,0 +1,294 @@
+{extend name="app" /}
+
+{block name="content"}
+
+<div class="page-header">
+    <h4 class="page-title">导航栏</h4>
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="/admin/home">
+                <i class="flaticon-home"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="">导航栏</a>
+        </li>
+
+
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">导航栏展示</div>
+            </div>
+            <div class="card-body">
+                {include file='../application/admin/layout/_error.html' /}
+                <table class="table mt-3">
+                    <thead>
+                    <tr style="text-align: center">
+                        <th scope="col" width="200">#</th>
+                        <th scope="col" width="300">导航名称</th>
+                        <th scope="col" width="300">添加时间</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $data as $k=>$v}
+                    <tr style="text-align: center">
+                        <td>{$k+1}</td>
+                        <td>{$v['title']}</td>
+                        <td>{$v['create_time']}</td>
+                        <td>
+                            <a href="/admin/nav/{$v['id']}/edit?page={$page}" class="btn btn-info btn-xs">编辑</a>
+                            <a href="/admin/com/{$v['id']}" class="btn btn-danger btn-xs">操作</a>
+<!--删除功能-->
+                            <!--                            <button type="button" class="btn btn-danger btn-xs" sid="{$v['id']}" id="alert_demo_8">删除-->
+<!--                            </button>-->
+
+                        </td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+<!--                //分页-->
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script>
+    //== Class definition
+    var SweetAlert2Demo = function () {
+
+        //== Demos
+        var initDemos = function () {
+            // //== Sweetalert Demo 1
+            // $('#alert_demo_1').click(function(e) {
+            //     swal('Good job!', {
+            //         buttons: {
+            //             confirm: {
+            //                 className : 'btn btn-success'
+            //             }
+            //         },
+            //     });
+            // });
+
+            //== Sweetalert Demo 2
+            // $('#alert_demo_2').click(function(e) {
+            //     swal("Here's the title!", "...and here's the text!", {
+            //         buttons: {
+            //             confirm: {
+            //                 className : 'btn btn-success'
+            //             }
+            //         },
+            //     });
+            // });
+
+            //== Sweetalert Demo 3
+            // $('#alert_demo_3_1').click(function(e) {
+            //     swal("Good job!", "You clicked the button!", {
+            //         icon : "warning",
+            //         buttons: {
+            //             confirm: {
+            //                 className : 'btn btn-warning'
+            //             }
+            //         },
+            //     });
+            // });
+            //
+            // $('#alert_demo_3_2').click(function(e) {
+            //     swal("Good job!", "You clicked the button!", {
+            //         icon : "error",
+            //         buttons: {
+            //             confirm: {
+            //                 className : 'btn btn-danger'
+            //             }
+            //         },
+            //     });
+            // });
+            //
+            // $('#alert_demo_3_3').click(function(e) {
+            //     swal("Good job!", "You clicked the button!", {
+            //         icon : "success",
+            //         buttons: {
+            //             confirm: {
+            //                 className : 'btn btn-success'
+            //             }
+            //         },
+            //     });
+            // });
+            //
+            // $('#alert_demo_3_4').click(function(e) {
+            //     swal("Good job!", "You clicked the button!", {
+            //         icon : "info",
+            //         buttons: {
+            //             confirm: {
+            //                 className : 'btn btn-info'
+            //             }
+            //         },
+            //     });
+            // });
+            //
+            // //== Sweetalert Demo 4
+            // $('#alert_demo_4').click(function(e) {
+            //     swal({
+            //         title: "Good job!",
+            //         text: "You clicked the button!",
+            //         icon: "success",
+            //         buttons: {
+            //             confirm: {
+            //                 text: "Confirm Me",
+            //                 value: true,
+            //                 visible: true,
+            //                 className: "btn btn-success",
+            //                 closeModal: true
+            //             }
+            //         }
+            //     });
+            // });
+            //
+            // $('#alert_demo_5').click(function(e){
+            //     swal({
+            //         title: 'Input Something',
+            //         html: '<br><input class="form-control" placeholder="Input Something" id="input-field">',
+            //         content: {
+            //             element: "input",
+            //             attributes: {
+            //                 placeholder: "Input Something",
+            //                 type: "text",
+            //                 id: "input-field",
+            //                 className: "form-control"
+            //             },
+            //         },
+            //         buttons: {
+            //             cancel: {
+            //                 visible: true,
+            //                 className: 'btn btn-danger'
+            //             },
+            //             confirm: {
+            //                 className : 'btn btn-success'
+            //             }
+            //         },
+            //     }).then(
+            //         function() {
+            //             swal("", "You entered : " + $('#input-field').val(), "success");
+            //         }
+            //     );
+            // });
+            //
+            // $('#alert_demo_6').click(function(e) {
+            //     swal("This modal will disappear soon!", {
+            //         buttons: false,
+            //         timer: 3000,
+            //     });
+            // });
+            //
+            // $('#alert_demo_7').click(function(e) {
+            //     swal({
+            //         title: 'Are you sure?',
+            //         text: "You won't be able to revert this!",
+            //         type: 'warning',
+            //         buttons:{
+            //             confirm: {
+            //                 text : 'Yes, delete it!',
+            //                 className : 'btn btn-success'
+            //             },
+            //             cancel: {
+            //                 visible: true,
+            //                 className: 'btn btn-danger'
+            //             }
+            //         }
+            //     }).then((Delete) => {
+            //         if (Delete) {
+            //             swal({
+            //                 title: 'Deleted!',
+            //                 text: 'Your file has been deleted.',
+            //                 type: 'success',
+            //                 buttons : {
+            //                     confirm: {
+            //                         className : 'btn btn-success'
+            //                     }
+            //                 }
+            //             });
+            //         } else {
+            //             swal.close();
+            //         }
+            //     });
+            // });
+
+            $('#alert_demo_8').click(function (e) {
+                swal({
+                    text: "确定要删除该数据吗？",
+                    type: 'warning',
+                    buttons: {
+                        cancel: {
+                            visible: true,
+                            text: '取消',
+                            className: 'btn btn-danger'
+                        },
+                        confirm: {
+                            text: '确定',
+                            className: 'btn btn-success'
+                        }
+                    }
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        let sid = $(this).attr('sid');
+                        $.post('/admin/nav/' + sid, {_method: 'DELETE'}, function (res) {
+
+                            if (res.code == 10001) {
+                                swal(res.msg, {
+                                    icon: "success",
+                                    buttons: {
+                                        confirm: {
+                                            className: 'btn btn-success',
+                                            text:'确定',
+                                        }
+                                    }
+                                }).then(()=>{
+                                    location.href='/admin/nav'
+                                });
+                            } else {
+                                swal(res.msg, {
+                                    buttons: {
+                                        confirm: {
+                                            className: 'btn btn-danger',
+                                            text:'确定',
+                                        }
+                                    }
+                                }).then(()=>{
+                                    window.location.reload();
+                                });
+                            }
+
+
+                        }, 'json')
+
+                    }
+                });
+            })
+
+        };
+
+        return {
+            //== Init
+            init: function () {
+                initDemos();
+            },
+        };
+    }();
+
+    //== Class Initialization
+    jQuery(document).ready(function () {
+        SweetAlert2Demo.init();
+    });
+</script>
+
+{/block}

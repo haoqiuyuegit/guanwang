@@ -1,0 +1,35 @@
+{extend name='common' /}
+{block name='content'}
+<div class="aboutbg" style="background-image: {$v['image']} !important;">
+    <div class="container animated bounceInUp">
+        <h2>{$nav['title']}</h2>
+        <p>{$nav['description']}</p>
+
+    </div>
+</div>
+<div class="newnav">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-1 col-xs-3"><a href="about.html" class="current">&nbsp;</a></div>
+            <div class="col-lg-1 col-xs-3"><a href=""></a></div>
+            <div class="col-lg-1 col-xs-3"><a href=""></a></div>
+            <div class="col-lg-1 col-xs-3"><a href="contact.html">  </a></div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="container mt">
+        <div class="row">
+            {foreach $recruit as $v}
+            <div class="col-lg-4 col-xs-12 talent">
+                <h2>{$v['name']}</h2>
+                <h3>职位要求：</h3>
+                <p>{$v['content']|raw}</p>
+            </div>
+            {/foreach}
+
+        </div>
+    </div>
+
+</div>
+{/block}

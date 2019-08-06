@@ -1,0 +1,133 @@
+{extend name="app" /}
+
+{block name="content"}
+
+<div class="page-header">
+    <h4 class="page-title">详情展示</h4>
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="/admin/home">
+                <i class="flaticon-home"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="/admin/nice">详情展示</a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="">详情编辑</a>
+        </li>
+
+
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-line nav-color-secondary">
+            <li class="nav-item">
+                <a class="nav-link " href="/admin/nice_detail">详情展示</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link active" href="">详情编辑</a>
+            </li>
+        </ul>
+        <div class="card mt-2">
+            <div class="card-header">
+                <div class="card-title">详情编辑</div>
+            </div>
+            <form action="" id="form" method="post" enctype="multipart/form-data">
+                <div class="card-body">
+                    {include file='../application/admin/layout/_error.html' /}
+                    <input type="hidden" name="id" value="{$filed['id']}">
+                    <div class="form-group">
+                        <label>详情名称</label>
+                        <input type="text" class="form-control input-square" name="title"
+                               value="{:session('old')['title']?:$filed['title']}" placeholder="请输入详情名称">
+                    </div>
+                    <div class="form-group">
+                        <label>详情描述</label>
+                        <textarea class="form-control" name="description" placeholder="请输入详情描述" rows="5">{:session('old')['description']?:$filed['description']}</textarea>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>产品缩略图</label>
+                        <input type="hidden" name="image" value="" id="image-input">
+                        <div class="col-xl-2">
+                            <div class="card-body" style="margin-left: -32px;margin-top: -15px">
+                                <a href="javascript:;" class="btn btn-info form-control-file" onclick="uploads()">
+											<span class="btn-label">
+												<i class="fa fa-upload"></i>
+											</span>
+                                    上传图片
+                                </a>
+                            </div>
+                        </div>
+                        <input type="file" id="file" name="image" style="display: none">
+                        <div class="col-xl-2">
+                            <div class="card-body" style="margin-left: -32px;margin-top: -20px">
+                                <img src="{:session('old')['image']?:$filed['image']}" id="img" alt="..."  style="margin-left: 20px;max-width: 80px;">
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card-action">
+                    <button class="btn btn-success">提交</button>
+                    <a href="javascript:;" class="btn btn-danger" onclick="reset()">重置</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function uploads() {
+        $('#file').click();
+        $('#file').on('change', function () {
+            let formData = new FormData();
+            formData.append('file', $('#file')[0].files[0]);
+            $.ajax({
+                url: '/admin/nice_detail_upload',
+                type: 'post',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response) {
+                        //上传成功
+                        $('#img').attr('src', response);
+                        $('#image-input').val(response);
+                    } else {
+                        //上传失败
+                        layer.msg('图片上传失败', {icon: 5, time: 2000});
+                        return false;
+                    }
+                },
+                xhr: function () {            //在jquery函数中直接使用ajax的XMLHttpRequest对象
+                    let xhr = new XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+
+                            let percentComplete = Math.round(evt.loaded * 100 / evt.total);
+                            $('#progress').css('display', 'block');
+                            $('#progress .progress-bar').text(percentComplete.toString() + '%').css('width', percentComplete.toString() + '%');
+                            // if($('#progress .progress-bar').text()=='100%'){
+                            //     $('#progress').css('display', 'none');
+                            // }
+                        }
+                    }, false);
+                    return xhr;
+                }
+            })
+        })
+
+    }
+</script>
+
+{/block}

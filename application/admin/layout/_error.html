@@ -1,0 +1,8 @@
+
+{if session('success')}
+<div class="card-sub card-success"><i class="flaticon-success"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{:session('success')}</div>
+{elseif session('error')}
+<div class="card-sub card-danger"><i class="flaticon-error"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{:session('error')}</div>
+{else/}
+
+{/if}

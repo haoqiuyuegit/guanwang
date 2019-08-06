@@ -1,0 +1,106 @@
+{extend name="app" /}
+
+{block name="content"}
+
+<div class="page-header">
+    <h4 class="page-title">轮播图</h4>
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="/admin/home">
+                <i class="flaticon-home"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="/admin/slide">轮播</a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="">编辑</a>
+        </li>
+
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">轮播图编辑</div>
+            </div>
+            <form action="/admin/slide/{$filed['id']}" id="form" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="page" value="{$page}">
+                <div class="card-body">
+                    {include file='../application/admin/layout/_error.html' /}
+                    <div class="form-group">
+                        <label>轮播图标题</label>
+                        <input type="text" class="form-control input-square" name="title" value="{:session('old')['title']?:$filed['title']}"
+                               placeholder="请输入轮播图标题">
+                    </div>
+                    <div class="form-group">
+                        <label>轮播图描述</label>
+                        <textarea class="form-control" name="description" placeholder="请输入轮播图描述" rows="3">{:session('old')['description']?:$filed['description']}</textarea>
+                    </div>
+                    <input type="hidden" name="image" value="" id="image-input">
+                    <div class="form-group">
+                        <label>上传轮播图</label>
+                        <div class="col-xl-2">
+                            <div class="card-body" style="margin-left: -32px;margin-top: -15px">
+                                <a href="javascript:;" class="btn btn-info form-control-file" onclick="uploads()">
+											<span class="btn-label">
+												<i class="fa fa-upload"></i>
+											</span>
+                                    上传图片
+                                </a>
+                            </div>
+                        </div>
+                        <input type="file" id="file" name="image" style="display: none">
+                        <div class="col-xl-2">
+                            <div class="card-body" style="margin-left: -32px;margin-top: -20px">
+                                <img src="{$filed['image']}" id="img" alt="..." width="500">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-action">
+                    <button class="btn btn-success" id="submit">提交</button>
+                    <a href="javascript:;" class="btn btn-danger" onclick="reset()">重置</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function uploads() {
+        $('#file').click();
+
+        $('#file').on('change',function () {
+            let formData=new FormData();
+            formData.append('file',$('#file')[0].files[0]);
+            $.ajax({
+                url:'/admin/slide/upload',
+                type:'post',
+                data:formData,
+                processData:false,
+                contentType:false,
+                success:function (response) {
+                    if(response){
+                        //上传成功
+                        $('#img').attr('src',response);
+                        $('#image-input').val(response);
+                    }else{
+                        //上传失败
+                        layer.msg('图片上传失败',{icon:5,time:2000});
+                        return false;
+                    }
+                }
+            })
+        })
+    }
+</script>
+{/block}
